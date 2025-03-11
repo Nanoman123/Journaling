@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Settings - Digital Journaling Website</title>
+    <meta name="generator" content="BBEdit 11.6">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="index.html">Journal</a>
+    <a href="settings.html">Settings</a>
+    <a href="help.html">Help</a>
+    <a href="resources.html">Resources</a>
+    <a href="#" onclick="logout()">Logout</a>
+</div>
+
+<div class="container">
+    <h2>Settings</h2>
+
+    <div class="section">
+        <h3>Account Information</h3>
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" value="Current Username" class="input-field"><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" value="user@example.com" class="input-field"><br><br>
+        <button class="button" onclick="saveSettings(event)">Save Settings</button>
+    </div>
+
+    <div class="section">
+        <h3>Accessibility Features</h3>
+
+        <label for="dark-mode">Enable Dark Mode:</label>
+        <input type="checkbox" id="dark-mode" name="dark-mode"><br><br>
+
+        <label for="font-size">Increase Font Size:</label>
+        <input type="checkbox" id="font-size" name="font-size"><br><br>
+
+        <label for="high-contrast">Enable High Contrast Mode:</label>
+        <input type="checkbox" id="high-contrast" name="high-contrast"><br><br>
+
+        <label for="screen-reader">Enable Screen Reader Mode:</label>
+        <input type="checkbox" id="screen-reader" name="screen-reader"><br><br>
+
+        <button class="button" onclick="applyAccessibility()">Apply Accessibility Settings</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

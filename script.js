@@ -1,3 +1,4 @@
+//Homepage *
 // Simulated login state
 let isLoggedIn = false;
 
@@ -48,3 +49,22 @@ function deleteEntry(entryItem) {
 window.onload = function() {
     isLoggedIn = true;
 };
+
+// Settings *
+function saveSettings(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    alert(`Settings saved! Username: ${username}, Email: ${email}`);
+}
+
+// Help *
+function submitFeedback() {
+    const feedback = document.getElementById('feedback-text').value;
+    if (feedback.trim() === "") {
+        alert("Please write some feedback.");
+        return;
+    }
+    alert("Thank you for your feedback!");
+    document.getElementById('feedback-text').value = '';  // Clear the feedback area
+}
