@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Digital Journaling Website</title>
+    <meta name="generator" content="BBEdit 11.6">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#" onclick="showJournal()">Journal</a>
+    <a href="#">Settings</a>
+    <a href="#">Help</a>
+    <a href="#">Resources</a>
+    <a href="#" onclick="logout()">Logout</a>
+</div>
+
+<div class="container">
+    <div id="journal" class="journal-entry">
+        <h2>Write Your Journal Entry</h2>
+        <label for="journal-text"></label><textarea id="journal-text" placeholder="Start your reflection here..."></textarea><br>
+        <button class="button" onclick="saveEntry()">Save Entry</button>
+    </div>
+    <div id="saved-entries">
+        <h2>Saved Entries</h2>
+        <div id="entries-list"></div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
