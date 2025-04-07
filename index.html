@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <title>Digital Journaling Website</title>
-    <meta name="generator" content="BBEdit 11.6">
+    <meta name="description" content="A calming and creative digital journaling website designed to support mental health and personal growth.">
+    <meta name="keywords" content="journaling, mental health, self-care, personal growth, digital diary, online journal, mindfulness">
+    <meta name="author" content="Adam Vang">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<!-- Navigation Bar -->
 <div class="navbar">
     <a href="index.html">Journal</a>
     <a href="settings.html">Settings</a>
@@ -16,16 +20,22 @@
     <a href="#" onclick="logout()">Logout</a>
 </div>
 
-<div class="container">
-    <div id="journal" class="journal-entry">
-        <h2>Write Your Journal Entry</h2>
-        <label for="journal-text"></label><textarea id="journal-text" placeholder="Start your reflection here..."></textarea><br>
-        <button class="button" onclick="saveEntry()">Save Entry</button>
+<!-- Journal Pages -->
+<div class="book-container">
+    <div id="book" class="book">
+        <div class="page" id="page1">
+            <label>
+                <textarea class="page-text" placeholder="Write your thoughts here..."></textarea>
+            </label>
+        </div>
+        <div class="page" id="page2">
+            <label>
+                <textarea class="page-text" placeholder="Write your thoughts here..."></textarea>
+            </label>
+        </div>
     </div>
-    <div id="saved-entries">
-        <h2>Saved Entries</h2>
-        <div id="entries-list"></div>
-    </div>
+    <button id="previous-page" class="page-button">Previous</button>
+    <button id="next-page" class="page-button">Next</button>
 </div>
 
 <script src="script.js"></script>

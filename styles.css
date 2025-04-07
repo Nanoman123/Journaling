@@ -1,16 +1,20 @@
-/*index*/
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #81c784;
     color: #333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
     background-color: #388e3c;
     padding: 1em;
     text-align: center;
+    flex-shrink: 0; /* Prevent navbar from shrinking */
 }
 
 .navbar a {
@@ -24,59 +28,75 @@ body {
     text-decoration: underline;
 }
 
-.container {
-    padding: 20px;
-    background-color: #a5d6a7;
-    border-radius: 8px;
-}
-
-.journal-entry {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
-}
-
-.journal-entry textarea {
+/* Book Container */
+.book-container {
+    position: relative;
     width: 100%;
-    height: 200px;
-    margin-bottom: 10px;
+    height: calc(100vh - 80px); /* Adjust to fit the screen under navbar */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#book {
+    display: flex;
+    transition: transform 1s ease-in-out;
+    width: 200%; /* Two pages visible at once */
+    height: 100%;
+}
+
+.page {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.page-text {
+    width: 80%;
+    height: 80%;
+    border: none;
     padding: 10px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    outline: none;
+    background: transparent;
     resize: none;
 }
 
-.button {
-    background-color: #388e3c;
+/* Navigation Buttons */
+.page-button {
+    position: absolute;
+    bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
+    z-index: 1;
 }
 
-.button:hover {
-    background-color: #2c6b2f;
+#previous-page {
+    left: 10px;
 }
 
-.delete-button {
-    background-color: #ff4d4d;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+#next-page {
+    right: 10px;
 }
 
-.delete-button:hover {
-    background-color: #e60000;
+/* Prevent horizontal scroll */
+html, body {
+    overflow-x: hidden;
 }
 
-/*settings*/
-/* General styles for the settings page */
+/* Settings Page */
 .container {
     padding: 20px;
     background-color: #a5d6a7;
@@ -125,7 +145,28 @@ input[type="checkbox"] {
     margin-top: 10px;
 }
 
-/*help*/
+/* Dark Mode */
+body.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+/* Large Font Size */
+body.large-font {
+    font-size: 24px; /* Make the font significantly larger */
+}
+
+/* High Contrast Mode */
+body.high-contrast {
+    background-color: black;
+    color: white;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+}
+
+/* Help Page */
 textarea {
     width: 100%;
     height: 150px;
@@ -137,7 +178,7 @@ textarea {
     resize: none;
 }
 
-/*resources*/
+/* Resources Page */
 ul {
     list-style-type: none;
     padding: 0;

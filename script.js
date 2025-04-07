@@ -1,16 +1,5 @@
-//Homepage *
-// Simulated login state
+// Homepage
 let isLoggedIn = false;
-
-// Show journal entry form
-function showJournal() {
-    if (!isLoggedIn) {
-        alert("Please log in to access the journal.");
-        return;
-    }
-    document.getElementById('journal').style.display = 'block';
-    document.getElementById('saved-entries').style.display = 'block';
-}
 
 // Log out function
 function logout() {
@@ -18,39 +7,35 @@ function logout() {
     alert("You have logged out.");
 }
 
-// Save journal entry
-function saveEntry() {
-    const entryText = document.getElementById('journal-text').value;
-    if (entryText.trim() === "") {
-        alert("Please write something in the journal.");
-        return;
-    }
-    const entryList = document.getElementById('entries-list');
-    const entryItem = document.createElement('div');
-    entryItem.classList.add('journal-entry');
-    entryItem.textContent = entryText;
-    const deleteButton = document.createElement('button');
-    deleteButton.classList.add('delete-button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.onclick = function() {
-        deleteEntry(entryItem);
-    };
-    entryItem.appendChild(deleteButton);
-    entryList.appendChild(entryItem);
-    document.getElementById('journal-text').value = '';
-}
-
-// Delete journal entry
-function deleteEntry(entryItem) {
-    entryItem.remove();
-}
-
 // Simulate login function (for testing)
 window.onload = function() {
     isLoggedIn = true;
 };
 
-// Settings *
+// Book Pages Navigation
+let currentPage = 1;
+const totalPages = 2;
+
+document.getElementById("next-page").addEventListener("click", function() {
+    if (currentPage < totalPages) {
+        currentPage++;
+        updateBook();
+    }
+});
+
+document.getElementById("previous-page").addEventListener("click", function() {
+    if (currentPage > 1) {
+        currentPage--;
+        updateBook();
+    }
+});
+
+function updateBook() {
+    const book = document.getElementById("book");
+    book.style.transform = `translateX(-${(currentPage - 1) * 50}%)`;
+}
+
+// Save Settings Function
 function saveSettings(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
@@ -58,13 +43,45 @@ function saveSettings(event) {
     alert(`Settings saved! Username: ${username}, Email: ${email}`);
 }
 
-// Help *
-function submitFeedback() {
-    const feedback = document.getElementById('feedback-text').value;
-    if (feedback.trim() === "") {
-        alert("Please write some feedback.");
-        return;
+// Accessibility settings function
+function applyAccessibility() {
+    const darkModeCheckbox = document.getElementById("dark-mode");
+    const fontSizeCheckbox = document.getElementById("font-size");
+    const highContrastCheckbox = document.getElementById("high-contrast");
+    const screenReaderCheckbox = document.getElementById("screen-reader");
+
+    // Toggle the classes on the body
+    if (darkModeCheckbox.checked) {
+        document.body.classList.add("dark-mode");
+        localStorage.setItem("dark-mode", "enabled");
+    } else {
+        document.body.classList.remove("dark-mode");
+        localStorage.setItem("dark-mode", "disabled");
     }
-    alert("Thank you for your feedback!");
-    document.getElementById('feedback-text').value = '';  // Clear the feedback area
+
+    if (fontSizeCheckbox.checked) {
+        document.body.classList.add("large-font");
+        localStorage.setItem("font-size", "enabled");
+    } else {
+        document.body.classList.remove("large-font");
+        localStorage.setItem("font-size", "disabled");
+    }
+
+    if (highContrastCheckbox.checked) {
+        document.body.classList.add("high-contrast");
+        localStorage.setItem("high-contrast", "enabled");
+    } else {
+        document.body.classList.remove("high-contrast");
+        localStorage.setItem("high-contrast", "disabled");
+    }
+
+    //not working just a simulation
+    if (screenReaderCheckbox.checked) {
+        alert("Screen reader mode activated. (This is a placeholder feature.)");
+        localStorage.setItem("screen-reader", "enabled");
+    } else {
+        alert("Screen reader mode deactivated.");
+        localStorage.setItem("screen-reader", "disabled");
+    }
 }
+
