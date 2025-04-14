@@ -1,34 +1,35 @@
-// Homepage
-let isLoggedIn = false;
-
-// Log out function
-function logout() {
-    isLoggedIn = false;
-    alert("You have logged out.");
-}
-
-// Simulate login function (for testing)
-window.onload = function() {
+window.onload = function () {
+    // Login simulation
     isLoggedIn = true;
+
+    // Copyright setup
+    const currentYear = new Date().getFullYear();
+    const copyrightText = `\u00A9 ${currentYear} Journaling. All rights reserved.`;
+    const copyrightElement = document.getElementById("copyright");
+    if (copyrightElement) {
+        copyrightElement.textContent = copyrightText;
+    }
+
+    // Page navigation
+    const nextPage = document.getElementById("next-page");
+    const previousPage = document.getElementById("previous-page");
+
+    if (nextPage && previousPage) {
+        nextPage.addEventListener("click", function () {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updateBook();
+            }
+        });
+
+        previousPage.addEventListener("click", function () {
+            if (currentPage > 1) {
+                currentPage--;
+                updateBook();
+            }
+        });
+    }
 };
-
-// Book Pages Navigation
-let currentPage = 1;
-const totalPages = 2;
-
-document.getElementById("next-page").addEventListener("click", function() {
-    if (currentPage < totalPages) {
-        currentPage++;
-        updateBook();
-    }
-});
-
-document.getElementById("previous-page").addEventListener("click", function() {
-    if (currentPage > 1) {
-        currentPage--;
-        updateBook();
-    }
-});
 
 function updateBook() {
     const book = document.getElementById("book");
