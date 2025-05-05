@@ -1,210 +1,275 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #81c784;
-    color: #333;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.navbar {
-    background-color: #388e3c;
-    padding: 1em;
-    text-align: center;
-    flex-shrink: 0; /* Prevent navbar from shrinking */
-}
-
-.navbar a {
-    color: white;
-    text-decoration: none;
-    margin: 0 20px;
-    font-size: 18px;
-}
-
-.navbar a:hover {
-    text-decoration: underline;
-}
-
-/* Book Container */
-.book-container {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 80px); /* Adjust to fit the screen under navbar */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-#book {
-    display: flex;
-    transition: transform 1s ease-in-out;
-    width: 200%; /* Two pages visible at once */
-    height: 100%;
-}
-
-.page {
-    width: 50%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
-}
-
-.page-text {
-    width: 80%;
-    height: 80%;
-    border: none;
-    padding: 10px;
-    font-size: 16px;
-    outline: none;
-    background: transparent;
-    resize: none;
-}
-
-/* Navigation Buttons */
-.page-button {
-    position: absolute;
-    bottom: 10px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    z-index: 1;
-}
-
-#previous-page {
-    left: 10px;
-}
-
-#next-page {
-    right: 10px;
-}
-
 /* Prevent horizontal scroll */
 html, body {
-    overflow-x: hidden;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
-/* Settings Page */
+/* Base typography & layout */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #81c784;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #388e3c;
+  padding: 1em;
+  text-align: center;
+  flex-shrink: 0;
+}
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  font-size: 18px;
+}
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+/* Journal Pages */
+.book-container {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#book {
+  display: flex;
+  transition: transform 1s ease-in-out;
+  /* width is set dynamically via script.js */
+  height: 100%;
+}
+.page {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  position: relative;
+}
+.page-text {
+  width: 80%;
+  height: 80%;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  background: transparent;
+  resize: none;
+}
+
+/* Prev/Next Buttons */
+.page-button {
+  position: absolute;
+  bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1;
+}
+#previous-page { left: 10px; }
+#next-page     { right: 10px; }
+
+/* Three-layer header (Settings, Help, Resources) */
+.subheader {
+  background-color: #daf1dc;
+  padding: 2rem 1rem;
+}
+.page-title-banner {
+  background-color: #fff;
+  padding: 1rem 1.5rem;
+  margin: -1.5rem auto 1.5rem;
+  max-width: 800px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.page-title-banner h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
+}
+.page-content {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Sections inside subheader pages */
 .container {
-    padding: 20px;
-    background-color: #a5d6a7;
-    border-radius: 8px;
+  padding: 20px;
+  background-color: #a5d6a7;
+  border-radius: 8px;
 }
-
 .section {
-    margin-bottom: 20px;
-    padding: 15px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
+/* Headings & form elements */
 h3 {
-    color: #388e3c;
+  color: #388e3c;
 }
-
 .input-field {
-    padding: 8px;
-    font-size: 16px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  width: 300px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
-
 .button {
-    background-color: #388e3c;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #388e3c;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-
 .button:hover {
-    background-color: #2c6b2f;
+  background-color: #2c6b2f;
 }
-
 label {
-    font-size: 16px;
-    font-weight: bold;
+  font-size: 16px;
+  font-weight: bold;
 }
-
 input[type="checkbox"] {
-    margin-top: 10px;
+  margin-top: 10px;
 }
-
-/* Dark Mode */
-body.dark-mode {
-    background-color: black;
-    color: white;
-}
-
-/* Large Font Size */
-body.large-font {
-    font-size: 24px; /* Make the font significantly larger */
-}
-
-/* High Contrast Mode */
-body.high-contrast {
-    background-color: black;
-    color: white;
-}
-
 input[type="checkbox"]:checked {
-    background-color: #4CAF50;
+  background-color: #4CAF50;
 }
 
-/* Help Page */
-textarea {
-    width: 100%;
-    height: 150px;
-    margin-bottom: 15px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: none;
+/* Accessibility modes */
+body.dark-mode    { background-color: #000; color: #fff; }
+body.large-font   { font-size: 24px; }
+body.high-contrast{ background-color: #000; color: #fff; }
+
+/* Help form textarea */
+#feedback-form textarea {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+  margin-bottom: 15px;
 }
 
-/* Resources Page */
-ul {
-    list-style-type: none;
-    padding: 0;
+/* Resources table */
+.container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: #fff;
+}
+.container table th,
+.container table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  text-align: left;
+  background-color: #fff;
+}
+.container table th {
+  background-color: #f0f0f0;
 }
 
-ul li {
-    margin-bottom: 8px;
-}
-
-ul li a {
-    text-decoration: none;
-    color: #1976D2;
-}
-
-ul li a:hover {
-    text-decoration: underline;
-}
-
+/* Footer */
 footer {
   position: fixed;
-  bottom: 10px;
+  bottom: 15px;
   right: 20px;
   font-size: 0.9em;
   color: #666;
-  background-color: rgba(255, 255, 255, 0.7); /* Optional for readability */
-  padding: 5px 10px;
-  border-radius: 5px;
+  background: transparent;
+  padding: 0;
   z-index: 1000;
+}
+
+/* 1) Make your container & subheader fluid, centered, and capped */
+.container,
+.subheader {
+  max-width: 800px;    /* cap the width on large screens */
+  width: 100%;         /* fill available space */
+  margin: 0 auto;      /* center */
+}
+
+/* 2) Responsive navbar */
+.navbar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;     /* allow links to wrap on narrow screens */
+}
+.navbar a {
+  padding: 10px 15px;
+  font-size: 16px;
+}
+
+/* 3) Page‐flip book tweaks */
+.book-container {
+  height: calc(100vh - 100px); /* shrink a bit on mobile if needed */
+}
+.page {
+  /* pages already 50% width; on narrow screens make them full width: */
+  transition: none;  /* disable the wide transform animation on small devices */
+}
+@media (max-width: 768px) {
+  #book {
+    width: 100% !important;
+  }
+  .page {
+    width: 100% !important;
+  }
+  .page-text {
+    width: 90%;
+    height: 70%;
+    font-size: 14px;
+  }
+}
+
+/* 4) Forms and inputs fluid */
+.input-field {
+  width: 100%;          /* full width of its container */
+  max-width: none;      /* override fixed 300px */
+}
+#feedback-form textarea {
+  width: 100%;
+}
+
+/* 5) Section cards fluid */
+.section {
+  padding: 1rem;
+}
+
+/* 6) Make buttons stack a bit on small screens */
+@media (max-width: 480px) {
+  .page-button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  .button {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }

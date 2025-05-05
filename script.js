@@ -4,36 +4,113 @@ window.onload = function () {
 
     // Copyright setup
     const currentYear = new Date().getFullYear();
-    const copyrightText = `\u00A9 ${currentYear} Journaling. All rights reserved.`;
+    const copyrightText = `© ${currentYear} Journaling. All rights reserved.`;
     const copyrightElement = document.getElementById("copyright");
     if (copyrightElement) {
         copyrightElement.textContent = copyrightText;
-    }
-
-    // Page navigation
-    const nextPage = document.getElementById("next-page");
-    const previousPage = document.getElementById("previous-page");
-
-    if (nextPage && previousPage) {
-        nextPage.addEventListener("click", function () {
-            if (currentPage < totalPages) {
-                currentPage++;
-                updateBook();
-            }
-        });
-
-        previousPage.addEventListener("click", function () {
-            if (currentPage > 1) {
-                currentPage--;
-                updateBook();
-            }
+        // Make it smaller and move to bottom-left to avoid overlapping buttons
+        Object.assign(copyrightElement.style, {
+            fontSize: '0.7em',
+            padding: '2px 5px',
+            left: '10px',
+            right: 'auto'
         });
     }
+
+    // Page indicator badge
+    const pageIndicator = document.createElement('div');
+    pageIndicator.id = 'page-indicator';
+    Object.assign(pageIndicator.style, {
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        padding: '5px',
+        borderRadius: '5px',
+        fontSize: '1em',
+        color: '#333',
+        zIndex: '1000'
+    });
+    document.body.appendChild(pageIndicator);
+
+    // Initialize paging
+    const book = document.getElementById("book");
+    const totalPages = 10;           // Total number of journal pages
+    window.currentPage = 1;
+    window.totalPages = totalPages;
+
+    // Setup existing page elements and storage
+    document.querySelectorAll('.page').forEach((page, index) => {
+        const pageNum = index + 1;
+        page.style.width = '50vw';
+
+        const ta = page.querySelector('.page-text');
+        if (ta) {
+            // Load saved text if available
+            const saved = localStorage.getItem(`page-${pageNum}`) || '';
+            ta.value = saved;
+
+            // Save on input
+            ta.addEventListener('input', () => {
+                localStorage.setItem(`page-${pageNum}`, ta.value);
+            });
+        }
+    });
+
+    // Dynamically add empty pages 3–10
+    for (let i = 3; i <= totalPages; i++) {
+        if (document.getElementById(`page${i}`)) continue;
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'page';
+        pageDiv.id = `page${i}`;
+        pageDiv.style.width = '50vw';
+
+        const textarea = document.createElement('textarea');
+        textarea.className = 'page-text';
+        textarea.placeholder = 'Write your thoughts here...';
+
+        // Load any saved content
+        const saved = localStorage.getItem(`page-${i}`) || '';
+        textarea.value = saved;
+        textarea.addEventListener('input', () => {
+            localStorage.setItem(`page-${i}`, textarea.value);
+        });
+
+        pageDiv.appendChild(textarea);
+        book.appendChild(pageDiv);
+    }
+
+    // Set book width to fit all pages
+    book.style.width = `${totalPages * 50}vw`;
+
+    // Page navigation controls
+    document.getElementById("next-page").addEventListener('click', () => {
+        if (window.currentPage < window.totalPages) {
+            window.currentPage++;
+            updateBook();
+        }
+    });
+    document.getElementById("previous-page").addEventListener('click', () => {
+        if (window.currentPage > 1) {
+            window.currentPage--;
+            updateBook();
+        }
+    });
+
+    // Initial positioning and page number
+    updateBook();
 };
 
 function updateBook() {
     const book = document.getElementById("book");
-    book.style.transform = `translateX(-${(currentPage - 1) * 50}%)`;
+    // Shift by 50vw per page number
+    book.style.transform = `translateX(-${(window.currentPage - 1) * 50}vw)`;
+
+    // Update page indicator
+    const indicator = document.getElementById("page-indicator");
+    if (indicator) {
+        indicator.textContent = `Page ${window.currentPage} / ${window.totalPages}`;
+    }
 }
 
 // Save Settings Function
@@ -85,4 +162,3 @@ function applyAccessibility() {
         localStorage.setItem("screen-reader", "disabled");
     }
 }
-
