@@ -32,6 +32,12 @@ body {
   text-decoration: underline;
 }
 
+.navbar .logo {
+  height: 30px;
+  width: auto;
+  margin-right: 12px;
+}
+
 /* Journal Pages */
 .book-container {
   position: relative;
@@ -67,6 +73,18 @@ body {
   outline: none;
   background: transparent;
   resize: none;
+}
+
+#page-indicator {
+  position: fixed !important;
+  top: 60px !important;
+  right: 10px !important;
+  z-index: 9999 !important;
+  background: rgba(255,255,255,0.8) !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+  font-size: 0.9em !important;
+  color: #333 !important;
 }
 
 /* Prev/Next Buttons */
@@ -114,17 +132,24 @@ body {
 }
 
 /* Sections inside subheader pages */
-.container {
-  padding: 20px;
-  background-color: #a5d6a7;
-  border-radius: 8px;
-}
 .section {
   margin-bottom: 20px;
   padding: 15px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Keep grid lines on Resources table */
+.subheader .section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.subheader .section table th,
+.subheader .section table td {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
 }
 
 /* Headings & form elements */
@@ -177,23 +202,6 @@ body.high-contrast{ background-color: #000; color: #fff; }
   margin-bottom: 15px;
 }
 
-/* Resources table */
-.container table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  background-color: #fff;
-}
-.container table th,
-.container table td {
-  border: 1px solid #ccc;
-  padding: 0.75rem;
-  text-align: left;
-  background-color: #fff;
-}
-.container table th {
-  background-color: #f0f0f0;
-}
 
 /* Footer */
 footer {
@@ -207,19 +215,18 @@ footer {
   z-index: 1000;
 }
 
-/* 1) Make your container & subheader fluid, centered, and capped */
 .container,
 .subheader {
-  max-width: 800px;    /* cap the width on large screens */
-  width: 100%;         /* fill available space */
-  margin: 0 auto;      /* center */
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* 2) Responsive navbar */
 .navbar {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;     /* allow links to wrap on narrow screens */
+  flex-wrap: wrap;
 }
 .navbar a {
   padding: 10px 15px;
@@ -248,13 +255,14 @@ footer {
   }
 }
 
+/* Sign in/ Sign up page*/
 .auth-container {
-  max-width: 500px;
-  width: 90%;
+  max-width: 550px;
+  width: 80%;
   margin: 4rem auto;
-  padding: 1rem;
+  padding: 2rem;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 9px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   }
 
@@ -273,14 +281,41 @@ footer {
 
 .auth-container input.input-field {
   width: 100%;
-  margin-top: 4px;
-  margin-bottom: 12px;
-  padding: 8px;
-  font-size: 1rem;
-  }
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.auth-container .button {
+  margin-top: 1rem;
+}
 
 .auth-container hr {
   border: none;
   border-top: 1px solid #ccc;
   margin: 1rem 0;
   }
+
+/* Sign-In page banner */
+.auth-container .auth-image {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.auth-container .auth-image img {
+  max-width: 150px;    /* scale down to “super tiny” */
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.page-title-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* H1 on left, IMG on right */
+}
+
+.page-title-banner img {
+  width: 24px;      /* super-tiny size—change to taste */
+  height: auto;
+  margin-left: 1rem;/* small gap from the H1 */
+}
