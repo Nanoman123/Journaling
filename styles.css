@@ -50,7 +50,6 @@ body {
 #book {
   display: flex;
   transition: transform 1s ease-in-out;
-  /* width is set dynamically via script.js */
   height: 100%;
 }
 .page {
@@ -238,9 +237,9 @@ footer {
   height: calc(100vh - 100px); /* shrink a bit on mobile if needed */
 }
 .page {
-  /* pages already 50% width; on narrow screens make them full width: */
   transition: none;  /* disable the wide transform animation on small devices */
 }
+
 @media (max-width: 768px) {
   #book {
     width: 100% !important;
@@ -302,7 +301,7 @@ footer {
   margin-bottom: 1rem;
 }
 .auth-container .auth-image img {
-  max-width: 150px;    /* scale down to “super tiny” */
+  max-width: 150px;
   width: 100%;
   height: auto;
   border-radius: 4px;
@@ -311,11 +310,11 @@ footer {
 .page-title-banner {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* H1 on left, IMG on right */
+  justify-content: space-between;
 }
 
 .page-title-banner img {
-  width: 24px;      /* super-tiny size—change to taste */
+  width: 24px;
   height: auto;
-  margin-left: 1rem;/* small gap from the H1 */
+  margin-left: 1rem;
 }
