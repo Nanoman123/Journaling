@@ -248,28 +248,39 @@ footer {
   }
 }
 
-/* 4) Forms and inputs fluid */
-.input-field {
-  width: 100%;          /* full width of its container */
-  max-width: none;      /* override fixed 300px */
-}
-#feedback-form textarea {
-  width: 100%;
-}
-
-/* 5) Section cards fluid */
-.section {
+.auth-container {
+  max-width: 500px;
+  width: 90%;
+  margin: 4rem auto;
   padding: 1rem;
-}
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
 
-/* 6) Make buttons stack a bit on small screens */
-@media (max-width: 480px) {
-  .page-button {
-    padding: 8px 12px;
-    font-size: 14px;
+.auth-container h2 {
+  margin-top: 0;
+  color: #388e3c;
   }
-  .button {
-    width: 100%;
-    box-sizing: border-box;
+
+.auth-container label {
+  font-weight: bold;
   }
-}
+
+.auth-container form {
+  margin-bottom: 2rem;
+  }
+
+.auth-container input.input-field {
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  padding: 8px;
+  font-size: 1rem;
+  }
+
+.auth-container hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 1rem 0;
+  }

@@ -1,164 +1,216 @@
+(() => {
+  const page = window.location.pathname.split('/').pop();
+  if (page !== 'login.html' && !localStorage.getItem('currentUser')) {
+    window.location.href = 'login.html';
+  }
+})();
+
 window.onload = function () {
-    // Login simulation
-    isLoggedIn = true;
-
-    // Copyright setup
-    const currentYear = new Date().getFullYear();
-    const copyrightText = `© ${currentYear} Journaling. All rights reserved.`;
-    const copyrightElement = document.getElementById("copyright");
-    if (copyrightElement) {
-        copyrightElement.textContent = copyrightText;
-        // Make it smaller and move to bottom-left to avoid overlapping buttons
-        Object.assign(copyrightElement.style, {
-            fontSize: '0.7em',
-            padding: '2px 5px',
-            left: '10px',
-            right: 'auto'
-        });
-    }
-
-    // Page indicator badge
-    const pageIndicator = document.createElement('div');
-    pageIndicator.id = 'page-indicator';
-    Object.assign(pageIndicator.style, {
-        position: 'fixed',
-        top: '10px',
-        right: '10px',
-        backgroundColor: 'rgba(255,255,255,0.7)',
-        padding: '5px',
-        borderRadius: '5px',
-        fontSize: '1em',
-        color: '#333',
-        zIndex: '1000'
+  // Copyright setup
+  const year = new Date().getFullYear();
+  const cText = `© ${year} Journaling. All rights reserved.`;
+  const cElem = document.getElementById("copyright");
+  if (cElem) {
+    cElem.textContent = cText;
+    Object.assign(cElem.style, {
+      fontSize: '0.7em',
+      padding: '2px 5px',
+      left: '10px',
+      right: 'auto'
     });
-    document.body.appendChild(pageIndicator);
+  }
+
+  // Page indicator (only useful on index.html)
+  const book = document.getElementById("book");
+  if (book) {
+    const indicator = document.createElement('div');
+    indicator.id = 'page-indicator';
+    Object.assign(indicator.style, {
+      position: 'fixed',
+      top: '10px',
+      right: '10px',
+      backgroundColor: 'rgba(255,255,255,0.7)',
+      padding: '5px',
+      borderRadius: '5px',
+      fontSize: '1em',
+      color: '#333',
+      zIndex: '1000'
+    });
+    document.body.appendChild(indicator);
 
     // Initialize paging
-    const book = document.getElementById("book");
-    const totalPages = 10;           // Total number of journal pages
+    const totalPages = 10;
     window.currentPage = 1;
     window.totalPages = totalPages;
 
-    // Setup existing page elements and storage
-    document.querySelectorAll('.page').forEach((page, index) => {
-        const pageNum = index + 1;
-        page.style.width = '50vw';
-
-        const ta = page.querySelector('.page-text');
-        if (ta) {
-            // Load saved text if available
-            const saved = localStorage.getItem(`page-${pageNum}`) || '';
-            ta.value = saved;
-
-            // Save on input
-            ta.addEventListener('input', () => {
-                localStorage.setItem(`page-${pageNum}`, ta.value);
-            });
-        }
+    // Set up existing pages 1–2
+    document.querySelectorAll('.page').forEach((pageEl, idx) => {
+      const pNum = idx + 1;
+      pageEl.style.width = '50vw';
+      const ta = pageEl.querySelector('.page-text');
+      if (ta) {
+        ta.value = localStorage.getItem(`page-${pNum}`) || '';
+        ta.addEventListener('input', () => {
+          localStorage.setItem(`page-${pNum}`, ta.value);
+        });
+      }
     });
 
-    // Dynamically add empty pages 3–10
+    // Clone pages 3–10
     for (let i = 3; i <= totalPages; i++) {
-        if (document.getElementById(`page${i}`)) continue;
-        const pageDiv = document.createElement('div');
-        pageDiv.className = 'page';
-        pageDiv.id = `page${i}`;
-        pageDiv.style.width = '50vw';
-
-        const textarea = document.createElement('textarea');
-        textarea.className = 'page-text';
-        textarea.placeholder = 'Write your thoughts here...';
-
-        // Load any saved content
-        const saved = localStorage.getItem(`page-${i}`) || '';
-        textarea.value = saved;
-        textarea.addEventListener('input', () => {
-            localStorage.setItem(`page-${i}`, textarea.value);
-        });
-
-        pageDiv.appendChild(textarea);
-        book.appendChild(pageDiv);
+      if (document.getElementById(`page${i}`)) continue;
+      const div = document.createElement('div');
+      div.className = 'page';
+      div.id = `page${i}`;
+      div.style.width = '50vw';
+      const ta = document.createElement('textarea');
+      ta.className = 'page-text';
+      ta.placeholder = 'Write your thoughts here...';
+      ta.value = localStorage.getItem(`page-${i}`) || '';
+      ta.addEventListener('input', () => {
+        localStorage.setItem(`page-${i}`, ta.value);
+      });
+      div.appendChild(ta);
+      book.appendChild(div);
     }
 
-    // Set book width to fit all pages
+    // Fit book width
     book.style.width = `${totalPages * 50}vw`;
 
-    // Page navigation controls
+    // Button handlers
     document.getElementById("next-page").addEventListener('click', () => {
-        if (window.currentPage < window.totalPages) {
-            window.currentPage++;
-            updateBook();
-        }
+      if (window.currentPage < window.totalPages) {
+        window.currentPage++;
+        updateBook();
+      }
     });
     document.getElementById("previous-page").addEventListener('click', () => {
-        if (window.currentPage > 1) {
-            window.currentPage--;
-            updateBook();
-        }
+      if (window.currentPage > 1) {
+        window.currentPage--;
+        updateBook();
+      }
     });
 
-    // Initial positioning and page number
+    // Initial render
     updateBook();
+  }
+
+  // Accessibility settings load from localStorage
+  const dm = localStorage.getItem("dark-mode");
+  if (dm === "enabled") document.body.classList.add("dark-mode");
+  const fs = localStorage.getItem("font-size");
+  if (fs === "enabled") document.body.classList.add("large-font");
+  const hc = localStorage.getItem("high-contrast");
+  if (hc === "enabled") document.body.classList.add("high-contrast");
 };
 
 function updateBook() {
-    const book = document.getElementById("book");
-    // Shift by 50vw per page number
-    book.style.transform = `translateX(-${(window.currentPage - 1) * 50}vw)`;
-
-    // Update page indicator
-    const indicator = document.getElementById("page-indicator");
-    if (indicator) {
-        indicator.textContent = `Page ${window.currentPage} / ${window.totalPages}`;
-    }
+  const book = document.getElementById("book");
+  book.style.transform = `translateX(-${(window.currentPage - 1) * 50}vw)`;
+  document.getElementById("previous-page").disabled = (window.currentPage === 1);
+  document.getElementById("next-page").disabled     = (window.currentPage === window.totalPages);
 }
 
-// Save Settings Function
 function saveSettings(event) {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    alert(`Settings saved! Username: ${username}, Email: ${email}`);
+  event.preventDefault();
+  const u = document.getElementById('username').value;
+  const e = document.getElementById('email').value;
+  alert(`Settings saved! Username: ${u}, Email: ${e}`);
 }
 
-// Accessibility settings function
 function applyAccessibility() {
-    const darkModeCheckbox = document.getElementById("dark-mode");
-    const fontSizeCheckbox = document.getElementById("font-size");
-    const highContrastCheckbox = document.getElementById("high-contrast");
-    const screenReaderCheckbox = document.getElementById("screen-reader");
+  const dm = document.getElementById("dark-mode").checked;
+  const fs = document.getElementById("font-size").checked;
+  const hc = document.getElementById("high-contrast").checked;
+  const sr = document.getElementById("screen-reader").checked;
 
-    // Toggle the classes on the body
-    if (darkModeCheckbox.checked) {
-        document.body.classList.add("dark-mode");
-        localStorage.setItem("dark-mode", "enabled");
-    } else {
-        document.body.classList.remove("dark-mode");
-        localStorage.setItem("dark-mode", "disabled");
-    }
+  if (dm) {
+    document.body.classList.add("dark-mode");
+    localStorage.setItem("dark-mode", "enabled");
+  } else {
+    document.body.classList.remove("dark-mode");
+    localStorage.setItem("dark-mode", "disabled");
+  }
 
-    if (fontSizeCheckbox.checked) {
-        document.body.classList.add("large-font");
-        localStorage.setItem("font-size", "enabled");
-    } else {
-        document.body.classList.remove("large-font");
-        localStorage.setItem("font-size", "disabled");
-    }
+  if (fs) {
+    document.body.classList.add("large-font");
+    localStorage.setItem("font-size", "enabled");
+  } else {
+    document.body.classList.remove("large-font");
+    localStorage.setItem("font-size", "disabled");
+  }
 
-    if (highContrastCheckbox.checked) {
-        document.body.classList.add("high-contrast");
-        localStorage.setItem("high-contrast", "enabled");
-    } else {
-        document.body.classList.remove("high-contrast");
-        localStorage.setItem("high-contrast", "disabled");
-    }
+  if (hc) {
+    document.body.classList.add("high-contrast");
+    localStorage.setItem("high-contrast", "enabled");
+  } else {
+    document.body.classList.remove("high-contrast");
+    localStorage.setItem("high-contrast", "disabled");
+  }
 
-    //not working just a simulation
-    if (screenReaderCheckbox.checked) {
-        alert("Screen reader mode activated. (This is a placeholder feature.)");
-        localStorage.setItem("screen-reader", "enabled");
-    } else {
-        alert("Screen reader mode deactivated.");
-        localStorage.setItem("screen-reader", "disabled");
-    }
+  if (sr) {
+    alert("Screen reader mode activated. (Placeholder feature.)");
+    localStorage.setItem("screen-reader", "enabled");
+  } else {
+    alert("Screen reader mode deactivated.");
+    localStorage.setItem("screen-reader", "disabled");
+  }
 }
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const loadUsers = () => JSON.parse(localStorage.getItem('users') || '[]');
+  const saveUsers = users => localStorage.setItem('users', JSON.stringify(users));
+
+  // Sign-Up (auto-login on success)
+  const signupForm = document.getElementById('signup-form');
+  if (signupForm) {
+    signupForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const u   = signupForm.username.value.trim();
+      const em  = signupForm.email.value.trim();
+      const p1  = signupForm.password.value;
+      const p2  = signupForm.password2.value;
+      if (p1 !== p2) return alert('Passwords do not match.');
+      const users = loadUsers();
+      if (users.find(x => x.username === u)) return alert('Username already exists.');
+      users.push({ username: u, email: em, password: p1 });
+      saveUsers(users);
+      localStorage.setItem('currentUser', u);
+      window.location.href = 'index.html';
+    });
+  }
+
+  // Sign-In
+  const signinForm = document.getElementById('signin-form');
+  if (signinForm) {
+    signinForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const u  = signinForm.username.value.trim();
+      const pw = signinForm.password.value;
+      const users = loadUsers();
+      if (!users.find(x => x.username === u && x.password === pw)) {
+        return alert('Invalid username or password.');
+      }
+      localStorage.setItem('currentUser', u);
+      window.location.href = 'index.html';
+    });
+  }
+
+  // Feedback form
+  const fb = document.getElementById('feedback-form');
+  if (fb) {
+    fb.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const txt = this.feedback.value.trim();
+      if (!txt) return alert('Please enter your feedback.');
+      alert('Thanks for your feedback:\n\n' + txt);
+      this.reset();
+    });
+  }
+});
+
+function logout() {
+  localStorage.removeItem('currentUser');
+  window.location.href = 'login.html';
+}
+

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <title>Settings - Digital Journaling Website</title>
     <meta name="author" content="Adam Vang">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,19 +25,26 @@
         <div class="section">
             <h3>Account Information</h3>
             <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" value="Current Username" class="input-field"><br><br>
+            <input type="text" id="username" name="username" value="Current Username"
+                   class="input-field"><br><br>
             <label for="email">Email:</label><br>
-            <input type="email" id="email" name="email" value="user@example.com" class="input-field"><br><br>
+            <input type="email" id="email" name="email" value="user@example.com"
+                   class="input-field"><br><br>
             <button class="button" onclick="saveSettings(event)">Save Settings</button>
         </div>
 
         <div class="section">
             <h3>Accessibility Features</h3>
-            <label><input type="checkbox" id="dark-mode" name="dark-mode"> Enable Dark Mode</label><br><br>
-            <label><input type="checkbox" id="font-size" name="font-size"> Increase Font Size</label><br><br>
-            <label><input type="checkbox" id="high-contrast" name="high-contrast"> Enable High Contrast Mode</label><br><br>
-            <label><input type="checkbox" id="screen-reader" name="screen-reader"> Enable Screen Reader Mode</label><br><br>
-            <button class="button" onclick="applyAccessibility()">Apply Accessibility Settings</button>
+            <label><input type="checkbox" id="dark-mode" name="dark-mode"> Enable Dark
+                Mode</label><br><br>
+            <label><input type="checkbox" id="font-size" name="font-size"> Increase Font
+                Size</label><br><br>
+            <label><input type="checkbox" id="high-contrast" name="high-contrast"> Enable High
+                Contrast Mode</label><br><br>
+            <label><input type="checkbox" id="screen-reader" name="screen-reader"> Enable Screen
+                Reader Mode</label><br><br>
+            <button class="button" onclick="applyAccessibility()">Apply Accessibility Settings
+            </button>
         </div>
     </div>
 </div>
